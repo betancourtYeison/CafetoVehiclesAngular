@@ -1,0 +1,171 @@
+<div class="row">
+  <mat-grid-tile-header>
+    <h3>
+      Vehicle <small>{{ formData.get("id").value }}</small>
+    </h3>
+  </mat-grid-tile-header>
+  <mat-grid-list cols="2" rowHeight="50px">
+    <mat-grid-tile colspan="1" rowspan="1">
+      <button
+        mat-raised-button
+        color="primary"
+        (click)="newHereo()"
+        [disabled]="loading"
+      >
+        New Vehicle
+      </button>
+    </mat-grid-tile>
+    <mat-grid-tile>
+      <button
+        mat-raised-button
+        color="warn"
+        [routerLink]="['/']"
+        [disabled]="loading"
+      >
+        Back
+      </button>
+    </mat-grid-tile>
+  </mat-grid-list>
+</div>
+<mat-divider></mat-divider>
+<div class="row animated fadeIn fast">
+  <div class="main-container">
+    <form [formGroup]="formData" (ngSubmit)="save()">
+      <mat-form-field>
+        <input
+          matInput
+          [ngClass]="{
+            'is-invalid':
+              formData.get('id').invalid && formData.get('id').touched,
+            'is-valid': formData.get('id').valid && formData.get('id').touched
+          }"
+          type="text"
+          placeholder="ID"
+          formControlName="id"
+        />
+        <mat-error
+          *ngIf="
+            formData.get('id').errors &&
+            formData.get('id').errors['required'] &&
+            formData.get('id').touched
+          "
+        >
+          ID is <strong>required</strong>
+        </mat-error>
+      </mat-form-field>
+      <mat-form-field>
+        <input
+          matInput
+          [ngClass]="{
+            'is-invalid':
+              formData.get('brand').invalid && formData.get('brand').touched,
+            'is-valid':
+              formData.get('brand').valid && formData.get('brand').touched
+          }"
+          type="text"
+          placeholder="Brand"
+          formControlName="brand"
+        />
+        <mat-error
+          *ngIf="
+            formData.get('brand').errors &&
+            formData.get('brand').errors['required'] &&
+            formData.get('brand').touched
+          "
+        >
+          Brand is <strong>required</strong>
+        </mat-error>
+      </mat-form-field>
+      <mat-form-field>
+        <input
+          matInput
+          [ngClass]="{
+            'is-invalid':
+              formData.get('line').invalid && formData.get('line').touched,
+            'is-valid':
+              formData.get('line').valid && formData.get('line').touched
+          }"
+          type="text"
+          placeholder="Line"
+          formControlName="line"
+        />
+        <mat-error
+          *ngIf="
+            formData.get('line').errors &&
+            formData.get('line').errors['required'] &&
+            formData.get('line').touched
+          "
+        >
+          Line is <strong>required</strong>
+        </mat-error>
+      </mat-form-field>
+      <mat-form-field>
+        <input
+          matInput
+          [ngClass]="{
+            'is-invalid':
+              formData.get('model').invalid && formData.get('model').touched,
+            'is-valid':
+              formData.get('model').valid && formData.get('model').touched
+          }"
+          type="text"
+          placeholder="Model"
+          formControlName="model"
+        />
+        <mat-error
+          *ngIf="
+            formData.get('model').errors &&
+            formData.get('model').errors['required'] &&
+            formData.get('model').touched
+          "
+        >
+          Model is <strong>required</strong>
+        </mat-error>
+      </mat-form-field>
+      <mat-form-field>
+        <input
+          matInput
+          [ngClass]="{
+            'is-invalid':
+              formData.get('color').invalid && formData.get('color').touched,
+            'is-valid':
+              formData.get('color').valid && formData.get('color').touched
+          }"
+          type="text"
+          placeholder="Color"
+          formControlName="color"
+        />
+        <mat-error
+          *ngIf="
+            formData.get('color').errors &&
+            formData.get('color').errors['required'] &&
+            formData.get('color').touched
+          "
+        >
+          Color is <strong>required</strong>
+        </mat-error>
+      </mat-form-field>
+      <div class="mt-10">
+        <button
+          mat-raised-button
+          color="primary"
+          type="submit"
+          [disabled]="!formData.valid || loading"
+        >
+          <span *ngIf="newVehicle">Save </span>
+          <span *ngIf="!newVehicle">Update </span>
+          <span *ngIf="loading"><i class="fa fa-sync fa-spin"></i></span>
+        </button>
+        <button
+          mat-raised-button
+          color="warn"
+          (click)="delete()"
+          [disabled]="loading"
+          *ngIf="!newVehicle"
+        >
+          <span>Delete</span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

@@ -1,0 +1,91 @@
+<app-loading *ngIf="loading"></app-loading>
+<div *ngIf="!loading" class="animated fadeIn fast">
+  <button mat-raised-button color="primary" [routerLink]="['/vehicle', 'new']">
+    New Vehicle
+  </button>
+  <mat-radio-group
+    aria-labelledby="example-radio-group-label"
+    class="example-radio-group"
+    [(ngModel)]="filterType"
+  >
+    <mat-radio-button
+      class="example-radio-button"
+      *ngFor="let filterTypeOption of filterTypeOptions"
+      [value]="filterTypeOption"
+    >
+      {{ filterTypeOption }}
+    </mat-radio-button>
+  </mat-radio-group>
+  <mat-form-field class="mt-10">
+    <input
+      matInput
+      (keydown.enter)="applyFilter($event.target.value)"
+      placeholder="Search..."
+    />
+  </mat-form-field>
+</div>
+<div
+  *ngIf="!loading"
+  class="animated fadeIn fast mat-elevation-z8 table-container"
+>
+  <table mat-table [dataSource]="dataSource" matSort>
+    <!-- ID Column -->
+    <ng-container matColumnDef="id">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>ID</th>
+      <td mat-cell *matCellDef="let row">{{ row.id }}</td>
+    </ng-container>
+
+    <!-- Brand Column -->
+    <ng-container matColumnDef="brand">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Brand</th>
+      <td mat-cell *matCellDef="let row">{{ row.brand }}</td>
+    </ng-container>
+
+    <!-- Line Column -->
+    <ng-container matColumnDef="line">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Line</th>
+      <td mat-cell *matCellDef="let row">{{ row.line }}</td>
+    </ng-container>
+
+    <!-- Model Column -->
+    <ng-container matColumnDef="model">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Model</th>
+      <td mat-cell *matCellDef="let row">{{ row.model }}</td>
+    </ng-container>
+
+    <!-- Color Column -->
+    <ng-container matColumnDef="color">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Color</th>
+      <td mat-cell *matCellDef="let row">{{ row.color }}</td>
+    </ng-container>
+
+    <!-- Admin Column -->
+    <ng-container matColumnDef="admin">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Admin</th>
+      <td mat-cell *matCellDef="let row">
+        <button
+          mat-raised-button
+          color="primary"
+          [routerLink]="['/vehicle', row.id]"
+        >
+          <mat-icon aria-hidden="false" aria-label="Example home icon">
+            edit
+          </mat-icon>
+        </button>
+        <button mat-raised-button color="warn" (click)="delete(row.id)">
+          <mat-icon aria-hidden="false" aria-label="Example home icon">
+            delete
+          </mat-icon>
+        </button>
+      </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+  </table>
+
+  <mat-paginator
+    pageSize="10"
+    [pageSizeOptions]="[5, 10, 25, 100]"
+  ></mat-paginator>
+</div>
