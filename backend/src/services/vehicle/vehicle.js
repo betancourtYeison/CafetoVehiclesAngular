@@ -140,12 +140,13 @@ app.post('/delete', (req, res) => {
 
     if(id){
         var index = vehicles.findIndex( (result) => {
-            return String(result.id).toUpperCase() === id.toUpperCase()
+            return String(result.id).toUpperCase() === String(id).toUpperCase()
         });
         
         if(index > -1) {
+
             vehicles = vehicles.filter( (result) => {
-                return String(result.id).toUpperCase() !== String(id)
+                return String(result.id).toUpperCase() !== String(id).toUpperCase()
             });
 
             // Write in JSON file

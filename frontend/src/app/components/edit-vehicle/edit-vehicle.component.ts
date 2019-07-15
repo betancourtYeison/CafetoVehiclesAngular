@@ -36,7 +36,10 @@ export class EditVehicleComponent implements OnInit {
     });
 
     this.formData = new FormGroup({
-      id: new FormControl("", Validators.required),
+      id: new FormControl(
+        { value: "", disabled: !this.newVehicle },
+        Validators.required
+      ),
       brand: new FormControl("", Validators.required),
       line: new FormControl("", Validators.required),
       model: new FormControl("", Validators.required),
@@ -62,6 +65,7 @@ export class EditVehicleComponent implements OnInit {
       house: "",
       biography: ""
     });
+    this.formData.controls.id.enable();
     this._router.navigate(["/vehicle", "new"]);
   }
 
@@ -70,6 +74,7 @@ export class EditVehicleComponent implements OnInit {
     if (this.newVehicle) {
       this._vehiclesService.createVehicle(this.formData.value).subscribe(
         result => {
+          this.formData.controls.id.disable();
           this._router.navigate(["/vehicle", result]);
           this.loading = false;
           this._snackBar.open("Car has been created", null, {
