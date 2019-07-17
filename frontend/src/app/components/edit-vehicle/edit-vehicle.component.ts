@@ -58,12 +58,13 @@ export class EditVehicleComponent implements OnInit {
     });
   }
 
-  newHereo() {
+  resetVehicle() {
     this.formData.reset({
       id: "",
-      name: "",
-      house: "",
-      biography: ""
+      brand: "",
+      line: "",
+      model: "",
+      color: ""
     });
     this.formData.controls.id.enable();
     this._router.navigate(["/vehicle", "new"]);
@@ -89,21 +90,23 @@ export class EditVehicleComponent implements OnInit {
         }
       );
     } else {
-      this._vehiclesService.updateVehicle(this.formData.value).subscribe(
-        () => {
-          this._router.navigate(["/"]);
-          this.loading = false;
-          this._snackBar.open("Car has been updated", null, {
-            duration: 3000
-          });
-        },
-        () => {
-          this._snackBar.open("Error updating", null, {
-            duration: 3000
-          });
-          this.loading = false;
-        }
-      );
+      this._vehiclesService
+        .updateVehicle(this.id, this.formData.value)
+        .subscribe(
+          () => {
+            this._router.navigate(["/"]);
+            this.loading = false;
+            this._snackBar.open("Car has been updated", null, {
+              duration: 3000
+            });
+          },
+          () => {
+            this._snackBar.open("Error updating", null, {
+              duration: 3000
+            });
+            this.loading = false;
+          }
+        );
     }
   }
 

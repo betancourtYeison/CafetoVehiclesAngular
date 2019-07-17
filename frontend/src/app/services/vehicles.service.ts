@@ -62,12 +62,13 @@ export class VehiclesService {
       .pipe(map((response: any) => (response.succes ? body.id : null)));
   }
 
-  updateVehicle(heroe: Vehicle) {
+  updateVehicle(id, heroe: Vehicle) {
     let url = `http://localhost:1010/vehicle/update`;
     let headers = new HttpHeaders({
       "Content-Type": "application/json"
     });
     let body = heroe;
+    body["id"] = id;
 
     return this._http
       .post(url, body, { headers })
